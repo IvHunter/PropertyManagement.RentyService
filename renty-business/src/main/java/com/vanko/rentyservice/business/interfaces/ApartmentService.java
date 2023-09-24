@@ -1,12 +1,17 @@
 package com.vanko.rentyservice.business.interfaces;
 
-import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
-import com.vanko.rentyservice.viewmodels.SellApartmentRequestModel;
+import com.vanko.rentyservice.viewmodels.ApartmentFiltersDto;
+import com.vanko.rentyservice.viewmodels.ApartmentDto;
+import com.vanko.rentyservice.viewmodels.SellApartmentDto;
+
+import java.util.List;
 
 public interface ApartmentService {
-    long addApartment(ApartmentViewModel apartmentView, long landlordId);
+    long addApartment(ApartmentDto apartmentView, long landlordId);
 
-    ApartmentViewModel getApartmentView(long id);
+    ApartmentDto getApartmentView(long id);
 
-    long sellApartment(SellApartmentRequestModel request);
+    List<ApartmentDto> getApartmentsByFilters(ApartmentFiltersDto filters);
+
+    long sellApartment(SellApartmentDto request);
 }

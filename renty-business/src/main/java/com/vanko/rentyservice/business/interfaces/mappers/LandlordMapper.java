@@ -1,10 +1,10 @@
 package com.vanko.rentyservice.business.interfaces.mappers;
 
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.LandlordViewModel;
+import com.vanko.rentyservice.viewmodels.LandlordDto;
 
 public interface LandlordMapper {
-    LandlordViewModel mapLandlordToView(Landlord landlord);
+    LandlordDto mapLandlordToView(Landlord landlord);
 
-    Landlord mapLandlordFromView(LandlordViewModel landlordView, boolean mapApartments);
+    Landlord mapLandlordFromView(LandlordDto landlordView, boolean mapApartments);
 }

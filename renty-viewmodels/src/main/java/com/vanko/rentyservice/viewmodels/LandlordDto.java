@@ -1,10 +1,9 @@
 package com.vanko.rentyservice.viewmodels;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
-public class LandlordViewModel {
+public class LandlordDto {
     private long id;
 
     @Size(min = 1, max =  100, message = "First Name must be between 1 and 100 characters")
@@ -16,9 +15,9 @@ public class LandlordViewModel {
     @Size(min = 1, max =  100, message = "Email must be between 1 and 100 characters")
     private String email;
 
-    private List<ApartmentViewModel> apartments;
+    private List<ApartmentDto> apartments;
 
-    public LandlordViewModel() {
+    public LandlordDto() {
 
     }
 
@@ -54,11 +53,11 @@ public class LandlordViewModel {
         this.email = email;
     }
 
-    public List<ApartmentViewModel> getApartments() {
+    public List<ApartmentDto> getApartments() {
         return apartments;
     }
 
-    public void setApartments(List<ApartmentViewModel> apartments) {
+    public void setApartments(List<ApartmentDto> apartments) {
         this.apartments = apartments;
     }
 }

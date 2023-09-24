@@ -8,7 +8,7 @@ import com.vanko.rentyservice.business.testservices.LandlordTestService;
 import com.vanko.rentyservice.commonmodels.ApartmentType;
 import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
+import com.vanko.rentyservice.viewmodels.ApartmentDto;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,12 +47,12 @@ public class ApartmentServiceRentyTests {
     @Test
     void testGetApartmentView() {
         Apartment apartment = this.apartmentTestService.getApartmentForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM, null);
-        ApartmentViewModel apartmentView = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
+        ApartmentDto apartmentView = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
 
         when(this.apartmentMapper.mapApartmentToView(eq(apartment))).thenReturn(apartmentView);
         when(this.entityManager.find(Apartment.class, apartment.getId())).thenReturn(apartment);
 
-        ApartmentViewModel foundApartment = this.apartmentServiceRenty.getApartmentView(apartment.getId());
+        ApartmentDto foundApartment = this.apartmentServiceRenty.getApartmentView(apartment.getId());
         verify(this.entityManager).find(Apartment.class, apartment.getId());
 
         assertEquals(apartment.getId(), foundApartment.getId(), "ID of the found apartment doesn't match! ID: " + foundApartment.getId());
@@ -63,7 +63,7 @@ public class ApartmentServiceRentyTests {
     @Test
     void testAddApartment() {
         Landlord landlord = this.landlordTestService.getLandlordForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
-        ApartmentViewModel apartmentView = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
+        ApartmentDto apartmentView = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
         Apartment apartment = this.apartmentTestService.getApartmentForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM, landlord);
 
         when(this.landlordService.getLandlord(anyLong(), eq(false))).thenReturn(landlord);

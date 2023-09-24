@@ -2,7 +2,7 @@ package com.vanko.rentyservice.business.implementations.mappers;
 
 import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.LandlordViewModel;
+import com.vanko.rentyservice.viewmodels.LandlordDto;
 import org.springframework.stereotype.Service;
 import com.vanko.rentyservice.business.interfaces.mappers.LandlordMapper;
 import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
@@ -21,8 +21,8 @@ public class LandlordMapperRenty implements LandlordMapper {
     }
 
     @Override
-    public LandlordViewModel mapLandlordToView(Landlord landlord) {
-        LandlordViewModel landlordView = new LandlordViewModel();
+    public LandlordDto mapLandlordToView(Landlord landlord) {
+        LandlordDto landlordView = new LandlordDto();
         landlordView.setId(landlord.getId());
         landlordView.setFirstName(landlord.getFirstName());
         landlordView.setLastName(landlord.getLastName());
@@ -38,7 +38,7 @@ public class LandlordMapperRenty implements LandlordMapper {
         return landlordView;
     }
 
-    public Landlord mapLandlordFromView(LandlordViewModel landlordView, boolean mapApartments) {
+    public Landlord mapLandlordFromView(LandlordDto landlordView, boolean mapApartments) {
         Landlord landlord = new Landlord();
         landlord.setId(landlordView.getId());
         landlord.setFirstName(landlordView.getFirstName());

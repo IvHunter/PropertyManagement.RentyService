@@ -2,14 +2,12 @@ package com.vanko.rentyservice.business.mappers;
 
 import com.vanko.rentyservice.business.implementations.mappers.ApartmentMapperRenty;
 import com.vanko.rentyservice.business.implementations.mappers.LandlordMapperRenty;
-import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 import com.vanko.rentyservice.business.testservices.ApartmentTestService;
 import com.vanko.rentyservice.business.testservices.LandlordTestService;
 import com.vanko.rentyservice.commonmodels.ApartmentType;
-import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
-import com.vanko.rentyservice.viewmodels.LandlordViewModel;
+import com.vanko.rentyservice.viewmodels.ApartmentDto;
+import com.vanko.rentyservice.viewmodels.LandlordDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -39,7 +37,7 @@ public class LandlordMapperTests {
     void testMapLandlordToView() {
         Landlord landlord = this.landlordTestService.getLandlordForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
 
-        LandlordViewModel mappedLandlord = this.landlordMapper.mapLandlordToView(landlord);
+        LandlordDto mappedLandlord = this.landlordMapper.mapLandlordToView(landlord);
 
         assertEquals(landlord.getId(), mappedLandlord.getId(), "ID of the found landlord doesn't match! ID: " + mappedLandlord.getId());
         assertEquals(landlord.getFirstName(), mappedLandlord.getFirstName(), "First Name of the found landlord doesn't match! First Name: " + mappedLandlord.getFirstName());
@@ -49,7 +47,7 @@ public class LandlordMapperTests {
 
     @Test
     void testMapLandlordFromView() {
-        LandlordViewModel landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
+        LandlordDto landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
 
         Landlord mappedLandlord = this.landlordMapper.mapLandlordFromView(landlordView, false);
 
@@ -61,9 +59,9 @@ public class LandlordMapperTests {
 
     @Test
     void testMapLandlordWithApartmentsFromView() {
-        LandlordViewModel landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
-        ApartmentViewModel apartment1 = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
-        ApartmentViewModel apartment2 = this.apartmentTestService.getApartmentViewForTest(2, "apartment 2", ApartmentType.DOUBLE_ROOM);
+        LandlordDto landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
+        ApartmentDto apartment1 = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
+        ApartmentDto apartment2 = this.apartmentTestService.getApartmentViewForTest(2, "apartment 2", ApartmentType.DOUBLE_ROOM);
         landlordView.setApartments(new ArrayList<>(Arrays.asList(apartment1, apartment2 )));
 
         Landlord mappedLandlord = this.landlordMapper.mapLandlordFromView(landlordView, true);

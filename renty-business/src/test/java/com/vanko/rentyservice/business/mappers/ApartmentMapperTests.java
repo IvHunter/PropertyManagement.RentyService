@@ -6,7 +6,7 @@ import com.vanko.rentyservice.business.testservices.LandlordTestService;
 import com.vanko.rentyservice.commonmodels.ApartmentType;
 import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
+import com.vanko.rentyservice.viewmodels.ApartmentDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -31,7 +31,7 @@ public class ApartmentMapperTests {
     void testMapApartmentToView() {
         Apartment apartment = this.apartmentTestService.getApartmentForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM, null);
 
-        ApartmentViewModel mappedApartment = this.apartmentMapper.mapApartmentToView(apartment);
+        ApartmentDto mappedApartment = this.apartmentMapper.mapApartmentToView(apartment);
 
         assertEquals(apartment.getId(), mappedApartment.getId(), "ID of the found apartment doesn't match! ID: " + mappedApartment.getId());
         assertEquals(apartment.getName(), mappedApartment.getName(), "Name of the found apartment doesn't match! Name: " + mappedApartment.getName());
@@ -40,7 +40,7 @@ public class ApartmentMapperTests {
 
     @Test
     void testMapApartmentFromView() {
-        ApartmentViewModel apartmentView = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
+        ApartmentDto apartmentView = this.apartmentTestService.getApartmentViewForTest(1, "apartment 1", ApartmentType.SINGLE_ROOM);
         Landlord landlord = this.landlordTestService.getLandlordForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
 
         Apartment mappedApartment = this.apartmentMapper.mapApartmentFromView(apartmentView, landlord);

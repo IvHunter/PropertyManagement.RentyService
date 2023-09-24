@@ -2,7 +2,7 @@ package com.vanko.rentyservice.web.controllers;
 
 import com.vanko.rentyservice.business.interfaces.LandlordService;
 import com.vanko.rentyservice.business.implementations.exceptions.LandlordNotFoundException;
-import com.vanko.rentyservice.viewmodels.LandlordViewModel;
+import com.vanko.rentyservice.viewmodels.LandlordDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,7 @@ public class LandlordController {
     }
 
     @PostMapping("/addLandlord")
-    public ResponseEntity<Void> addLandlord(@Valid @RequestBody LandlordViewModel landlordView,
+    public ResponseEntity<Void> addLandlord(@Valid @RequestBody LandlordDto landlordView,
                                             UriComponentsBuilder uriComponentsBuilder) {
         long id = this.landlordService.addLandlord(landlordView);
 

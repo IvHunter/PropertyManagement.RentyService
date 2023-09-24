@@ -4,7 +4,7 @@ import com.vanko.rentyservice.commonmodels.ApartmentType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class ApartmentViewModel {
+public class ApartmentDto {
     private Long id;
 
     @Size(min = 1, max =  100, message = "Name must be between 1 and 100 characters")
@@ -13,10 +13,10 @@ public class ApartmentViewModel {
     @NotNull(message = "Type cannot be null")
     private ApartmentType type;
 
-    public ApartmentViewModel() {
+    public ApartmentDto() {
     }
 
-    public ApartmentViewModel(String name, ApartmentType type) {
+    public ApartmentDto(String name, ApartmentType type) {
         this.name = name;
         this.type = type;
     }

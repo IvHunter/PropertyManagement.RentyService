@@ -4,7 +4,7 @@ import com.vanko.rentyservice.business.implementations.LandlordServiceRenty;
 import com.vanko.rentyservice.business.testservices.LandlordTestService;
 import com.vanko.rentyservice.business.interfaces.mappers.LandlordMapper;
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.LandlordViewModel;
+import com.vanko.rentyservice.viewmodels.LandlordDto;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,12 +52,12 @@ public class LandlordServiceRentyTests {
     @Test
     void testGetLandlordView() {
         Landlord landlord = this.landlordTestService.getLandlordForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
-        LandlordViewModel landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
+        LandlordDto landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
 
         when(this.landlordMapper.mapLandlordToView(eq(landlord))).thenReturn(landlordView);
         when(this.entityManager.find(Landlord.class, landlord.getId())).thenReturn(landlord);
 
-        LandlordViewModel foundLandlordView = this.landlordServiceRenty.getLandlordView(landlord.getId(), false);
+        LandlordDto foundLandlordView = this.landlordServiceRenty.getLandlordView(landlord.getId(), false);
         verify(this.entityManager).find(Landlord.class, landlord.getId());
 
         assertEquals(landlord.getId(), foundLandlordView.getId(), "ID of the found landlord doesn't match! ID: " + foundLandlordView.getId());
@@ -69,7 +69,7 @@ public class LandlordServiceRentyTests {
     @Test
     void testAddLandlord() {
         Landlord landlord = this.landlordTestService.getLandlordForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
-        LandlordViewModel landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
+        LandlordDto landlordView = this.landlordTestService.getLandlordViewForTest(1, "Vanko", "Mihov", "vonko@gmail.com");
 
         when(this.landlordMapper.mapLandlordFromView(eq(landlordView), eq(false))).thenReturn(landlord);
 

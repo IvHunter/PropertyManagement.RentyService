@@ -3,8 +3,9 @@ package com.vanko.rentyservice.web.controllers;
 import com.vanko.rentyservice.business.interfaces.ApartmentService;
 import com.vanko.rentyservice.business.implementations.exceptions.InvalidApartmentException;
 import com.vanko.rentyservice.business.implementations.exceptions.LandlordNotFoundException;
-import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
-import com.vanko.rentyservice.viewmodels.SellApartmentRequestModel;
+import com.vanko.rentyservice.viewmodels.ApartmentDto;
+import com.vanko.rentyservice.viewmodels.ApartmentFiltersDto;
+import com.vanko.rentyservice.viewmodels.SellApartmentDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -33,9 +36,16 @@ public class ApartmentController {
         }
     }
 
+    @PostMapping("/apartments/filters")
+    public ResponseEntity<List<ApartmentDto>> getApartments(@RequestBody ApartmentFiltersDto filters) {
+        List<ApartmentDto> apartments = this.aprtmentService.getApartmentsByFilters(filters);
+
+        return new ResponseEntity<>(apartments, HttpStatus.OK);
+    }
+
     @PostMapping("/landlords/{landlordId}/apartments")
     public ResponseEntity<Void> addApartment(@PathVariable long landlordId,
-                                             @Valid @RequestBody ApartmentViewModel apartment,
+                                             @Valid @RequestBody ApartmentDto apartment,
                                              UriComponentsBuilder uriComponentsBuilder) {
         try {
             long id = this.aprtmentService.addApartment(apartment, landlordId);
@@ -52,7 +62,7 @@ public class ApartmentController {
     }
 
     @PatchMapping("/apartments/sellApartment")
-    public ResponseEntity<Void> sellApartment(@Valid @RequestBody SellApartmentRequestModel model,
+    public ResponseEntity<Void> sellApartment(@Valid @RequestBody SellApartmentDto model,
                                               UriComponentsBuilder uriComponentsBuilder) {
         long id = this.aprtmentService.sellApartment(model);
 

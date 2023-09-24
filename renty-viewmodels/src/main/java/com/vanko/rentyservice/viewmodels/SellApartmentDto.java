@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Min;
 
 import java.math.BigDecimal;
 
-public class SellApartmentRequestModel {
+public class SellApartmentDto {
     @Min(value = 1, message = "Apartment ID must be positive!")
     private long apartmentId;
 
@@ -14,7 +14,7 @@ public class SellApartmentRequestModel {
     @Min(value = 1, message = "Apartment selling price must be positive!")
     private BigDecimal price;
 
-    public SellApartmentRequestModel() {
+    public SellApartmentDto() {
     }
 
     public long getApartmentId() {

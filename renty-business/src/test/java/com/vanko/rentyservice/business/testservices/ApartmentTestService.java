@@ -3,13 +3,13 @@ package com.vanko.rentyservice.business.testservices;
 import com.vanko.rentyservice.commonmodels.ApartmentType;
 import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
+import com.vanko.rentyservice.viewmodels.ApartmentDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApartmentTestService {
-    public ApartmentViewModel getApartmentViewForTest(long apartmentId, String apartmentName, ApartmentType type) {
-        ApartmentViewModel apartmentView = new ApartmentViewModel(); //populate it
+    public ApartmentDto getApartmentViewForTest(long apartmentId, String apartmentName, ApartmentType type) {
+        ApartmentDto apartmentView = new ApartmentDto(); //populate it
         apartmentView.setId(apartmentId);
         apartmentView.setName(apartmentName);
         apartmentView.setType(ApartmentType.DOUBLE_ROOM);

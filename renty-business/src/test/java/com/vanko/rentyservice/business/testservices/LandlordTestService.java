@@ -1,7 +1,7 @@
 package com.vanko.rentyservice.business.testservices;
 
 import com.vanko.rentyservice.data.Landlord;
-import com.vanko.rentyservice.viewmodels.LandlordViewModel;
+import com.vanko.rentyservice.viewmodels.LandlordDto;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,8 +16,8 @@ public class LandlordTestService {
         return landlord;
     }
 
-    public LandlordViewModel getLandlordViewForTest(long landlordId, String firstName, String lastName, String email) {
-        LandlordViewModel landlordView = new LandlordViewModel(); //populate it
+    public LandlordDto getLandlordViewForTest(long landlordId, String firstName, String lastName, String email) {
+        LandlordDto landlordView = new LandlordDto(); //populate it
         landlordView.setId(landlordId);
         landlordView.setFirstName(firstName);
         landlordView.setLastName(lastName);
