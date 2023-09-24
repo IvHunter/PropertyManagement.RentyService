@@ -25,7 +25,10 @@ public class LandlordMapperRenty implements LandlordMapper {
         landlordView.setFirstName(landlord.getFirstName());
         landlordView.setLastName(landlord.getLastName());
         landlordView.setEmail(landlord.getEmail());
-        landlordView.setApartments(landlord.getApartments());
+        landlordView.setApartments(landlord.getApartments().
+                                            stream()
+                                            .map(ap -> apartmentMapper.mapApartmentToView(ap))
+                                            .toList());
 
         return landlordView;
     }
