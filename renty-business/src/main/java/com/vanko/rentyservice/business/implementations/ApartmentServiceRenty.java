@@ -61,11 +61,7 @@ public class ApartmentServiceRenty implements ApartmentService {
         CriteriaQuery<Apartment> query = cb.createQuery(Apartment.class);
         Root<Apartment> root = query.from(Apartment.class);
 
-        Specification<Apartment> spec = Specification.where(null);
-
-        if (filters.getName() != null) {
-            spec = spec.and(ApartmentSpecifications.hasName(filters.getName()));
-        }
+        Specification<Apartment> spec = this.buildFiltersSpecification(filters);
 
         query.where(spec.toPredicate(root, query, cb));
 
@@ -91,5 +87,21 @@ public class ApartmentServiceRenty implements ApartmentService {
         this.entityManager.merge(apartment);
 
         return apartment.getId();
+    }
+
+    private Specification<Apartment> buildFiltersSpecification(ApartmentFiltersDto filters) {
+        Specification<Apartment> spec = Specification.where(null);
+
+        if (filters.getName() != null) {
+            spec = spec.and(ApartmentSpecifications.hasName(filters.getName()));
+        }
+        if (filters.getType() != null) {
+            spec = spec.and(ApartmentSpecifications.hasType(filters.getType()));
+        }
+        if (filters.getLandlordId() > 0) {
+            spec = spec.and(ApartmentSpecifications.hasLandLord(filters.getLandlordId()));
+        }
+
+        return spec;
     }
 }
