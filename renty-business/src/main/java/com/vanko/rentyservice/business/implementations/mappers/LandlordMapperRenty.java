@@ -8,7 +8,9 @@ import com.vanko.rentyservice.business.interfaces.mappers.LandlordMapper;
 import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LandlordMapperRenty implements LandlordMapper {
@@ -25,10 +27,13 @@ public class LandlordMapperRenty implements LandlordMapper {
         landlordView.setFirstName(landlord.getFirstName());
         landlordView.setLastName(landlord.getLastName());
         landlordView.setEmail(landlord.getEmail());
-        landlordView.setApartments(landlord.getApartments().
-                                            stream()
-                                            .map(ap -> apartmentMapper.mapApartmentToView(ap))
-                                            .toList());
+        landlordView.setApartments(
+                Optional.ofNullable(landlord.getApartments())
+                        .orElse(Collections.emptyList())
+                        .stream()
+                        .map(ap -> apartmentMapper.mapApartmentToView(ap))
+                        .toList()
+        );
 
         return landlordView;
     }
