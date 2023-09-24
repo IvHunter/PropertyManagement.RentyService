@@ -4,6 +4,8 @@ import com.vanko.rentyservice.business.interfaces.ApartmentService;
 import com.vanko.rentyservice.business.implementations.exceptions.InvalidApartmentException;
 import com.vanko.rentyservice.business.implementations.exceptions.LandlordNotFoundException;
 import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
+import com.vanko.rentyservice.viewmodels.SellApartmentRequestModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +49,16 @@ public class ApartmentController {
         } catch (InvalidApartmentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PatchMapping("/apartments/sellApartment")
+    public ResponseEntity<Void> sellApartment(@Valid @RequestBody SellApartmentRequestModel model,
+                                              UriComponentsBuilder uriComponentsBuilder) {
+        long id = this.aprtmentService.sellApartment(model);
+
+        UriComponents uriComponents =
+                uriComponentsBuilder.path("/api/apartments/{id}").buildAndExpand(id);
+
+        return ResponseEntity.ok().header(HttpHeaders.LOCATION, uriComponents.toUriString()).build();
     }
 }

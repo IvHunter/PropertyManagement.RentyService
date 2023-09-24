@@ -6,11 +6,9 @@ import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.PanelUI;
-
 @Service
 public class ApartmentTestService {
-    public ApartmentViewModel getApartmentView(long apartmentId, String apartmentName, ApartmentType type) {
+    public ApartmentViewModel getApartmentViewForTest(long apartmentId, String apartmentName, ApartmentType type) {
         ApartmentViewModel apartmentView = new ApartmentViewModel(); //populate it
         apartmentView.setId(apartmentId);
         apartmentView.setName(apartmentName);

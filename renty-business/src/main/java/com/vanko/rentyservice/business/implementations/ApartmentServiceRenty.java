@@ -5,6 +5,7 @@ import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
+import com.vanko.rentyservice.viewmodels.SellApartmentRequestModel;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class ApartmentServiceRenty implements ApartmentService {
     @Override
     @Transactional
     public long addApartment(ApartmentViewModel apartmentView, long landlordId) {
-        Landlord landlord = this.landlordService.getLandlord(landlordId);
+        Landlord landlord = this.landlordService.getLandlord(landlordId, false);
         Apartment apartment = this.apartmentMapper.mapApartmentFromView(apartmentView, landlord);
 
         this.entityManager.persist(apartment);
@@ -45,5 +46,23 @@ public class ApartmentServiceRenty implements ApartmentService {
         }
 
         return this.apartmentMapper.mapApartmentToView(apartment);
+    }
+
+    @Override
+    @Transactional
+    public long sellApartment(SellApartmentRequestModel request) {
+        var apartment = this.entityManager.find(Apartment.class, request.getApartmentId());
+        if (apartment == null) {
+            throw new ApartmentNotFoundException("No apartment exists with id: " + request.getApartmentId());
+        }
+
+        //TODO: Add payment logic
+
+        Landlord landlord = this.landlordService.getLandlord(request.getNewLandlordId(), false);
+        apartment.setLandlord(landlord);
+
+        this.entityManager.merge(apartment);
+
+        return apartment.getId();
     }
 }

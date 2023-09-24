@@ -40,7 +40,7 @@ public class LandlordServiceRentyTests {
 
         when(this.entityManager.find(Landlord.class, landlord.getId())).thenReturn(landlord);
 
-        Landlord foundLandlord = this.landlordServiceRenty.getLandlord(landlord.getId());
+        Landlord foundLandlord = this.landlordServiceRenty.getLandlord(landlord.getId(), false);
         verify(this.entityManager).find(Landlord.class, landlord.getId());
 
         assertEquals(landlord.getId(), foundLandlord.getId(), "ID of the found landlord doesn't match! ID: " + foundLandlord.getId());
@@ -57,7 +57,7 @@ public class LandlordServiceRentyTests {
         when(this.landlordMapper.mapLandlordToView(eq(landlord))).thenReturn(landlordView);
         when(this.entityManager.find(Landlord.class, landlord.getId())).thenReturn(landlord);
 
-        LandlordViewModel foundLandlordView = this.landlordServiceRenty.getLandlordView(landlord.getId());
+        LandlordViewModel foundLandlordView = this.landlordServiceRenty.getLandlordView(landlord.getId(), false);
         verify(this.entityManager).find(Landlord.class, landlord.getId());
 
         assertEquals(landlord.getId(), foundLandlordView.getId(), "ID of the found landlord doesn't match! ID: " + foundLandlordView.getId());

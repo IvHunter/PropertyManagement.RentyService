@@ -1,4 +1,5 @@
 package com.vanko.rentyservice.viewmodels;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;

@@ -19,9 +19,22 @@ public class LandlordServiceRenty implements LandlordService {
         this.landlordMapper = landlordMapper;
     }
 
+    public Landlord getLandlord(long landlordId, boolean withApartments) {
+        Landlord landlord = this.entityManager.find(Landlord.class, landlordId);
+        if (landlord == null) {
+            throw new LandlordNotFoundException("No landlord exists with id: " + landlordId);
+        }
+
+        if (withApartments) {
+            landlord.getApartments().size();
+        }
+
+        return landlord;
+    }
+
     @Override
-    public LandlordViewModel getLandlordView(long id) {
-        Landlord landlord = this.getLandlord(id);
+    public LandlordViewModel getLandlordView(long id, boolean withApartments) {
+        Landlord landlord = this.getLandlord(id, withApartments);
         LandlordViewModel landlordView = this.landlordMapper.mapLandlordToView(landlord);
 
         return landlordView;
@@ -37,14 +50,5 @@ public class LandlordServiceRenty implements LandlordService {
         System.out.println("New Landlord ID: " + landlord.getId());
 
         return landlord.getId();
-    }
-
-    public Landlord getLandlord(long landlordId) {
-        Landlord landlord = this.entityManager.find(Landlord.class, landlordId);
-        if (landlord == null) {
-            throw new LandlordNotFoundException("No landlord exists with id: " + landlordId);
-        }
-
-        return landlord;
     }
 }

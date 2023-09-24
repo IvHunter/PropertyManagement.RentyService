@@ -12,7 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/landlord")
+@RequestMapping("/api/landlords")
 public class LandlordController {
     private final LandlordService landlordService;
 
@@ -22,7 +22,17 @@ public class LandlordController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getLandlord(@PathVariable int id) {
-        var landlordView = this.landlordService.getLandlordView(id);
+        var landlordView = this.landlordService.getLandlordView(id, false);
+        if (landlordView != null) {
+            return new ResponseEntity<>(landlordView, HttpStatus.OK);
+        } else {
+            throw new LandlordNotFoundException("Landlord with ID: " + id + " not found!");
+        }
+    }
+
+    @GetMapping("/{id}/getWithApartments")
+    public ResponseEntity<Object> getLandlordWithApartments(@PathVariable int id) {
+        var landlordView = this.landlordService.getLandlordView(id, true);
         if (landlordView != null) {
             return new ResponseEntity<>(landlordView, HttpStatus.OK);
         } else {
