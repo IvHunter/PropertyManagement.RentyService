@@ -4,10 +4,10 @@ import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
 import org.springframework.stereotype.Service;
-import com.vanko.rentyservice.business.interfaces.mappers.IApartmentMapper;
+import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 
 @Service
-public class ApartmentMapper implements IApartmentMapper {
+public class ApartmentMapperRenty implements ApartmentMapper {
     public ApartmentViewModel mapApartmentToView(Apartment apartment) {
         ApartmentViewModel model = new ApartmentViewModel();
         model.setId(apartment.getId());

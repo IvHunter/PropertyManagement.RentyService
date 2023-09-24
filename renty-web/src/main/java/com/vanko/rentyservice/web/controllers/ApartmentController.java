@@ -1,6 +1,6 @@
 package com.vanko.rentyservice.web.controllers;
 
-import com.vanko.rentyservice.business.interfaces.IApartmentService;
+import com.vanko.rentyservice.business.interfaces.ApartmentService;
 import com.vanko.rentyservice.business.implementations.exceptions.InvalidApartmentException;
 import com.vanko.rentyservice.business.implementations.exceptions.LandlordNotFoundException;
 import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
@@ -14,9 +14,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/api")
 public class ApartmentController {
-    private final IApartmentService aprtmentService;
+    private final ApartmentService aprtmentService;
 
-    public ApartmentController(IApartmentService landLordService) {
+    public ApartmentController(ApartmentService landLordService) {
         this.aprtmentService = landLordService;
     }
 

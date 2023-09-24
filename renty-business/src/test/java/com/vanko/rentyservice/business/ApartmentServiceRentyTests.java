@@ -1,8 +1,8 @@
 package com.vanko.rentyservice.business;
-import com.vanko.rentyservice.business.implementations.ApartmentService;
+import com.vanko.rentyservice.business.implementations.ApartmentServiceRenty;
 import com.vanko.rentyservice.business.implementations.exceptions.ApartmentNotFoundException;
-import com.vanko.rentyservice.business.interfaces.ILandlordService;
-import com.vanko.rentyservice.business.interfaces.mappers.IApartmentMapper;
+import com.vanko.rentyservice.business.interfaces.LandlordService;
+import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 import com.vanko.rentyservice.business.testservices.ApartmentTestService;
 import com.vanko.rentyservice.business.testservices.LandlordTestService;
 import com.vanko.rentyservice.commonmodels.ApartmentType;
@@ -23,18 +23,18 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ApartmentServiceTests {
+public class ApartmentServiceRentyTests {
     @Mock
     private EntityManager entityManager;
 
     @Mock
-    private ILandlordService landlordService;
+    private LandlordService landlordService;
 
     @Mock
-    private IApartmentMapper apartmentMapper;
+    private ApartmentMapper apartmentMapper;
 
     @InjectMocks
-    private ApartmentService apartmentService;
+    private ApartmentServiceRenty apartmentServiceRenty;
 
     private ApartmentTestService apartmentTestService = new ApartmentTestService();
     private LandlordTestService landlordTestService = new LandlordTestService();
@@ -52,7 +52,7 @@ public class ApartmentServiceTests {
         when(this.apartmentMapper.mapApartmentToView(eq(apartment))).thenReturn(apartmentView);
         when(this.entityManager.find(Apartment.class, apartment.getId())).thenReturn(apartment);
 
-        ApartmentViewModel foundApartment = this.apartmentService.getApartmentView(apartment.getId());
+        ApartmentViewModel foundApartment = this.apartmentServiceRenty.getApartmentView(apartment.getId());
         verify(this.entityManager).find(Apartment.class, apartment.getId());
 
         assertEquals(apartment.getId(), foundApartment.getId(), "ID of the found apartment doesn't match! ID: " + foundApartment.getId());
@@ -69,7 +69,7 @@ public class ApartmentServiceTests {
         when(this.landlordService.getLandlord(anyLong())).thenReturn(landlord);
         when(this.apartmentMapper.mapApartmentFromView(eq(apartmentView), eq(landlord))).thenReturn(apartment);
 
-        long newApId = this.apartmentService.addApartment(apartmentView, 1L);
+        long newApId = this.apartmentServiceRenty.addApartment(apartmentView, 1L);
 
         verify(this.entityManager).persist(apartment);
         assertEquals(apartment.getId(), newApId, "The id of the newly added apartment doesn't match! Found ID: " + newApId);
@@ -79,6 +79,6 @@ public class ApartmentServiceTests {
     void testGetApartmentViewNotFound() {
         when(entityManager.find(Apartment.class, 1L)).thenReturn(null);
 
-        assertThrows(ApartmentNotFoundException.class, () -> apartmentService.getApartmentView(1L), "The test should have thrown ApartmentNotFoundException!");
+        assertThrows(ApartmentNotFoundException.class, () -> apartmentServiceRenty.getApartmentView(1L), "The test should have thrown ApartmentNotFoundException!");
     }
 }

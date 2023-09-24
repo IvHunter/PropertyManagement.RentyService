@@ -1,8 +1,8 @@
 package com.vanko.rentyservice.business;
 
-import com.vanko.rentyservice.business.implementations.LandlordService;
+import com.vanko.rentyservice.business.implementations.LandlordServiceRenty;
 import com.vanko.rentyservice.business.testservices.LandlordTestService;
-import com.vanko.rentyservice.business.interfaces.mappers.ILandlordMapper;
+import com.vanko.rentyservice.business.interfaces.mappers.LandlordMapper;
 import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.LandlordViewModel;
 import jakarta.persistence.EntityManager;
@@ -17,15 +17,15 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class LandlordServiceTests {
+public class LandlordServiceRentyTests {
     @Mock
     private EntityManager entityManager;
 
     @Mock
-    private ILandlordMapper landlordMapper;
+    private LandlordMapper landlordMapper;
 
     @InjectMocks
-    private LandlordService landlordService;
+    private LandlordServiceRenty landlordServiceRenty;
 
     private LandlordTestService landlordTestService = new LandlordTestService();
 
@@ -40,7 +40,7 @@ public class LandlordServiceTests {
 
         when(this.entityManager.find(Landlord.class, landlord.getId())).thenReturn(landlord);
 
-        Landlord foundLandlord = this.landlordService.getLandlord(landlord.getId());
+        Landlord foundLandlord = this.landlordServiceRenty.getLandlord(landlord.getId());
         verify(this.entityManager).find(Landlord.class, landlord.getId());
 
         assertEquals(landlord.getId(), foundLandlord.getId(), "ID of the found landlord doesn't match! ID: " + foundLandlord.getId());
@@ -57,7 +57,7 @@ public class LandlordServiceTests {
         when(this.landlordMapper.mapLandlordToView(eq(landlord))).thenReturn(landlordView);
         when(this.entityManager.find(Landlord.class, landlord.getId())).thenReturn(landlord);
 
-        LandlordViewModel foundLandlordView = this.landlordService.getLandlordView(landlord.getId());
+        LandlordViewModel foundLandlordView = this.landlordServiceRenty.getLandlordView(landlord.getId());
         verify(this.entityManager).find(Landlord.class, landlord.getId());
 
         assertEquals(landlord.getId(), foundLandlordView.getId(), "ID of the found landlord doesn't match! ID: " + foundLandlordView.getId());
@@ -73,7 +73,7 @@ public class LandlordServiceTests {
 
         when(this.landlordMapper.mapLandlordFromView(eq(landlordView), eq(false))).thenReturn(landlord);
 
-        long newLandlordId = this.landlordService.addLandlord(landlordView);
+        long newLandlordId = this.landlordServiceRenty.addLandlord(landlordView);
 
         verify(this.entityManager).persist(landlord);
         assertEquals(landlord.getId(), newLandlordId, "The id of the newly added landlord doesn't match! Found ID: " + newLandlordId);

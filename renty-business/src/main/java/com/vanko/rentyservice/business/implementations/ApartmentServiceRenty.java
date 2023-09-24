@@ -1,25 +1,25 @@
 package com.vanko.rentyservice.business.implementations;
 
 import com.vanko.rentyservice.business.implementations.exceptions.ApartmentNotFoundException;
-import com.vanko.rentyservice.business.interfaces.mappers.IApartmentMapper;
+import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.vanko.rentyservice.business.interfaces.IApartmentService;
-import com.vanko.rentyservice.business.interfaces.ILandlordService;
+import com.vanko.rentyservice.business.interfaces.ApartmentService;
+import com.vanko.rentyservice.business.interfaces.LandlordService;
 
 @Service
-public class ApartmentService implements IApartmentService {
+public class ApartmentServiceRenty implements ApartmentService {
     private final EntityManager entityManager;
-    private final ILandlordService landlordService;
-    private final IApartmentMapper apartmentMapper;
+    private final LandlordService landlordService;
+    private final ApartmentMapper apartmentMapper;
 
-    public ApartmentService(EntityManager entityManager,
-                            ILandlordService landlordService,
-                            IApartmentMapper apartmentMapper) {
+    public ApartmentServiceRenty(EntityManager entityManager,
+                                 LandlordService landlordService,
+                                 ApartmentMapper apartmentMapper) {
         this.entityManager = entityManager;
         this.landlordService = landlordService;
         this.apartmentMapper = apartmentMapper;

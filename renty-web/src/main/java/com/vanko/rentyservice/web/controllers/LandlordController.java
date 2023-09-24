@@ -1,6 +1,6 @@
 package com.vanko.rentyservice.web.controllers;
 
-import com.vanko.rentyservice.business.interfaces.ILandlordService;
+import com.vanko.rentyservice.business.interfaces.LandlordService;
 import com.vanko.rentyservice.business.implementations.exceptions.LandlordNotFoundException;
 import com.vanko.rentyservice.viewmodels.LandlordViewModel;
 import org.springframework.http.HttpStatus;
@@ -14,9 +14,9 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/landlord")
 public class LandlordController {
-    private final ILandlordService landlordService;
+    private final LandlordService landlordService;
 
-    public LandlordController(ILandlordService landlordService) {
+    public LandlordController(LandlordService landlordService) {
         this.landlordService = landlordService;
     }
 

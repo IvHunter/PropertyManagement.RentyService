@@ -4,17 +4,17 @@ import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.LandlordViewModel;
 import org.springframework.stereotype.Service;
-import com.vanko.rentyservice.business.interfaces.mappers.ILandlordMapper;
-import com.vanko.rentyservice.business.interfaces.mappers.IApartmentMapper;
+import com.vanko.rentyservice.business.interfaces.mappers.LandlordMapper;
+import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LandlordMapper implements ILandlordMapper {
-    private final IApartmentMapper apartmentMapper;
+public class LandlordMapperRenty implements LandlordMapper {
+    private final ApartmentMapper apartmentMapper;
 
-    public LandlordMapper(IApartmentMapper apartmentMapper) {
+    public LandlordMapperRenty(ApartmentMapper apartmentMapper) {
         this.apartmentMapper = apartmentMapper;
     }
 

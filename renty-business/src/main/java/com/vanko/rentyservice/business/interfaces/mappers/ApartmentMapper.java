@@ -4,7 +4,7 @@ import com.vanko.rentyservice.data.Apartment;
 import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.ApartmentViewModel;
 
-public interface IApartmentMapper {
+public interface ApartmentMapper {
     ApartmentViewModel mapApartmentToView(Apartment apartment);
 
     Apartment mapApartmentFromView(ApartmentViewModel apartmentView, Landlord landlord);
