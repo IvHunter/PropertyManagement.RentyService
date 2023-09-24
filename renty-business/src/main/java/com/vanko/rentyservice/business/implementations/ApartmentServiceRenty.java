@@ -4,6 +4,7 @@ import com.vanko.rentyservice.business.implementations.exceptions.ApartmentNotFo
 import com.vanko.rentyservice.business.implementations.specifications.ApartmentSpecifications;
 import com.vanko.rentyservice.business.interfaces.mappers.ApartmentMapper;
 import com.vanko.rentyservice.data.Apartment;
+import com.vanko.rentyservice.data.CriteriaObjects;
 import com.vanko.rentyservice.data.Landlord;
 import com.vanko.rentyservice.viewmodels.ApartmentFiltersDto;
 import com.vanko.rentyservice.viewmodels.ApartmentDto;
@@ -57,15 +58,13 @@ public class ApartmentServiceRenty implements ApartmentService {
     }
 
     public List<ApartmentDto> getApartmentsByFilters(ApartmentFiltersDto filters) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Apartment> query = cb.createQuery(Apartment.class);
-        Root<Apartment> root = query.from(Apartment.class);
+        CriteriaObjects<Apartment> criteriaObjects = new CriteriaObjects<>(entityManager, Apartment.class);
 
         Specification<Apartment> spec = this.buildFiltersSpecification(filters);
 
-        query.where(spec.toPredicate(root, query, cb));
+        criteriaObjects.getQuery().where(spec.toPredicate(criteriaObjects.getRoot(), criteriaObjects.getQuery(), criteriaObjects.getCb()));
 
-        List<ApartmentDto> apartments = entityManager.createQuery(query).getResultList()
+        List<ApartmentDto> apartments = entityManager.createQuery(criteriaObjects.getQuery()).getResultList()
                 .stream().map(ap -> this.apartmentMapper.mapApartmentToView(ap)).toList();
 
         return apartments;
